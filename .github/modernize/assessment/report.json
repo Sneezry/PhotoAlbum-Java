@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "tool": "AppCAT",
+    "version": "1.0.0",
+    "timestamp": "2026-03-12T06:40:57Z",
+    "projectName": "photo-album",
+    "projectPath": ".",
+    "target": "azure",
+    "source": "java"
+  },
+  "summary": {
+    "totalIssues": 12,
+    "critical": 2,
+    "high": 4,
+    "medium": 4,
+    "low": 2,
+    "totalEffortMinutes": 540,
+    "files": [
+      "pom.xml",
+      "src/main/java/com/photoalbum/model/Photo.java",
+      "src/main/java/com/photoalbum/repository/PhotoRepository.java",
+      "src/main/java/com/photoalbum/service/impl/PhotoServiceImpl.java",
+      "src/main/resources/application.properties"
+    ]
+  },
+  "issues": [
+    {
+      "id": "java-version-outdated",
+      "ruleset": "java-version",
+      "rule": "java8-eol",
+      "category": "mandatory",
+      "severity": "critical",
+      "effort": 5,
+      "title": "Java 8 is outdated and approaching end-of-life",
+      "description": "The application targets Java 8 (java.version=1.8), which has reached end of public updates. Java 8 is not supported on modern Azure App Service configurations and may pose security risks. Upgrading to Java 17 or Java 21 (LTS) is required for Azure compatibility.",
+      "recommendation": "Upgrade the project to Java 17 or Java 21 LTS. Update pom.xml: set <java.version>17</java.version>, <maven.compiler.source>17</maven.compiler.source>, and <maven.compiler.target>17</maven.compiler.target>. Also update the Dockerfile to use a Java 17 or 21 base image.",
+      "affectedFiles": [
+        {
+          "file": "pom.xml",
+          "lineStart": 24,
+          "lineEnd": 27,
+          "snippet": "<java.version>1.8</java.version>\n<maven.compiler.source>8</maven.compiler.source>\n<maven.compiler.target>8</maven.compiler.target>"
+        },
+        {
+          "file": "Dockerfile",
+          "lineStart": 1,
+          "lineEnd": 2,
+          "snippet": "FROM maven:3.9.6-eclipse-temurin-8 AS build"
+        }
+      ]
+    },
+    {
+      "id": "spring-boot-version-outdated",
+      "ruleset": "spring-framework",
+      "rule": "spring-boot-2x-eol",
+      "category": "mandatory",
+      "severity": "critical",
+      "effort": 8,
+      "title": "Spring Boot 2.7.x is past end-of-life",
+      "description": "The application uses Spring Boot 2.7.18, which reached end-of-life in November 2023. Spring Boot 2.7.x no longer receives security patches or bug fixes. Azure Spring Apps and Azure App Service recommend Spring Boot 3.x. Upgrading is required to maintain a secure and supported deployment.",
+      "recommendation": "Upgrade to Spring Boot 3.x (currently 3.3.x or 3.4.x). Note that Spring Boot 3 requires Java 17 as the minimum version and replaces javax.* packages with jakarta.*. Update all @Entity, @Repository, @Service annotations and persistence imports accordingly.",
+      "affectedFiles": [
+        {
+          "file": "pom.xml",
+          "lineStart": 8,
+          "lineEnd": 13,
+          "snippet": "<parent>\n  <groupId>org.springframework.boot</groupId>\n  <artifactId>spring-boot-starter-parent</artifactId>\n  <version>2.7.18</version>\n</parent>"
+        }
+      ]
+    },
+    {
+      "id": "javax-persistence-deprecated",
+      "ruleset": "jakarta-ee",
+      "rule": "javax-to-jakarta-migration",
+      "category": "mandatory",
+      "severity": "high",
+      "effort": 3,
+      "title": "javax.persistence.* imports are deprecated; use jakarta.persistence.*",
+      "description": "The Photo entity uses javax.persistence.* and javax.validation.constraints.* imports. Spring Boot 3 migrated from Java EE (javax.*) to Jakarta EE (jakarta.*). These imports must be updated before upgrading to Spring Boot 3.",
+      "recommendation": "Replace all javax.persistence.* with jakarta.persistence.* and javax.validation.constraints.* with jakarta.validation.constraints.* in Photo.java. Also update any other files importing javax.* JEE packages.",
+      "affectedFiles": [
+        {
+          "file": "src/main/java/com/photoalbum/model/Photo.java",
+          "lineStart": 1,
+          "lineEnd": 8,
+          "snippet": "import javax.persistence.*;\nimport javax.validation.constraints.NotBlank;\nimport javax.validation.constraints.NotNull;\nimport javax.validation.constraints.Positive;\nimport javax.validation.constraints.Size;"
+        }
+      ]
+    },
+    {
+      "id": "oracle-specific-sql",
+      "ruleset": "database-portability",
+      "rule": "oracle-proprietary-sql",
+      "category": "mandatory",
+      "severity": "high",
+      "effort": 8,
+      "title": "Oracle-proprietary SQL used in JPA queries",
+      "description": "The PhotoRepository uses multiple Oracle-specific SQL constructs that are not portable to other databases: ROWNUM for pagination (instead of standard OFFSET/FETCH NEXT), NVL() for null handling (instead of COALESCE()), TO_CHAR() for date formatting (instead of CAST/FORMAT), and Oracle analytical window functions in their Oracle-specific syntax. This creates a strong coupling to Oracle Database, making cloud migration difficult.",
+      "recommendation": "Replace Oracle-specific SQL with JPQL or database-agnostic SQL. Use Spring Data JPA Pageable for pagination instead of ROWNUM. Replace NVL() with COALESCE(). Replace TO_CHAR() with standard SQL date functions. Alternatively, migrate to a cloud-native database like Azure Database for PostgreSQL or Azure Cosmos DB.",
+      "affectedFiles": [
+        {
+          "file": "src/main/java/com/photoalbum/repository/PhotoRepository.java",
+          "lineStart": 30,
+          "lineEnd": 95,
+          "snippet": "nativeQuery = true (multiple instances with ROWNUM, NVL, TO_CHAR, RANK OVER)"
+        }
+      ]
+    },
+    {
+      "id": "oracle-jdbc-coupling",
+      "ruleset": "database-portability",
+      "rule": "oracle-driver-dependency",
+      "category": "mandatory",
+      "severity": "high",
+      "effort": 5,
+      "title": "Hard dependency on Oracle JDBC driver (ojdbc8)",
+      "description": "The application explicitly depends on the Oracle JDBC driver (ojdbc8) and configures the Oracle JDBC URL (jdbc:oracle:thin:@...) and Oracle Hibernate dialect (org.hibernate.dialect.OracleDialect). This creates a hard dependency on Oracle Database and prevents migration to cloud-native database services without significant refactoring.",
+      "recommendation": "Consider migrating to a cloud-native database such as Azure Database for PostgreSQL or Azure Cosmos DB. Replace ojdbc8 with the appropriate JDBC driver (e.g., postgresql for PostgreSQL). Update spring.datasource.url, spring.datasource.driver-class-name, and spring.jpa.database-platform accordingly. Refactor Oracle-specific queries to use standard SQL.",
+      "affectedFiles": [
+        {
+          "file": "pom.xml",
+          "lineStart": 49,
+          "lineEnd": 54,
+          "snippet": "<dependency>\n  <groupId>com.oracle.database.jdbc</groupId>\n  <artifactId>ojdbc8</artifactId>\n</dependency>"
+        },
+        {
+          "file": "src/main/resources/application.properties",
+          "lineStart": 9,
+          "lineEnd": 17,
+          "snippet": "spring.datasource.url=jdbc:oracle:thin:@oracle-db:1521/FREEPDB1\nspring.jpa.database-platform=org.hibernate.dialect.OracleDialect"
+        }
+      ]
+    },
+    {
+      "id": "hardcoded-credentials",
+      "ruleset": "security",
+      "rule": "hardcoded-secrets",
+      "category": "mandatory",
+      "severity": "high",
+      "effort": 3,
+      "title": "Database credentials are hard-coded in configuration files",
+      "description": "Database username and password are hard-coded in application.properties (spring.datasource.username=photoalbum, spring.datasource.password=photoalbum) and in docker-compose.yml. Hard-coded credentials are a security risk and are not suitable for production deployments or cloud environments where secrets management solutions are available.",
+      "recommendation": "Remove hard-coded credentials from all configuration files. Use environment variables or Azure Key Vault to manage secrets. Configure the application to read credentials from environment variables (e.g., SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD) or integrate with Azure Managed Identity and Azure Key Vault for secure secret management.",
+      "affectedFiles": [
+        {
+          "file": "src/main/resources/application.properties",
+          "lineStart": 10,
+          "lineEnd": 12,
+          "snippet": "spring.datasource.username=photoalbum\nspring.datasource.password=photoalbum"
+        },
+        {
+          "file": "docker-compose.yml",
+          "lineStart": 8,
+          "lineEnd": 10,
+          "snippet": "ORACLE_PASSWORD=photoalbum\nAPP_USER=photoalbum\nAPP_USER_PASSWORD=photoalbum"
+        }
+      ]
+    },
+    {
+      "id": "blob-storage-in-database",
+      "ruleset": "cloud-readiness",
+      "rule": "binary-data-in-relational-db",
+      "category": "optional",
+      "severity": "medium",
+      "effort": 8,
+      "title": "Binary photo data (BLOB) stored in relational database",
+      "description": "The Photo entity stores binary image data directly in an Oracle BLOB column (photo_data). Storing large binary files in a relational database reduces performance, increases database costs, and does not scale well for cloud deployments. Cloud-native applications typically store binary assets in dedicated object storage.",
+      "recommendation": "Migrate photo binary data to Azure Blob Storage. Remove the photo_data byte[] column from the Photo entity and replace it with a URL/path pointing to the stored blob in Azure Blob Storage. Use the Azure Blob Storage SDK (com.azure:azure-storage-blob) to upload and retrieve photos. This will reduce database load, improve scalability, and lower storage costs.",
+      "affectedFiles": [
+        {
+          "file": "src/main/java/com/photoalbum/model/Photo.java",
+          "lineStart": 36,
+          "lineEnd": 40,
+          "snippet": "@Lob\n@Column(name = \"photo_data\", nullable = true)\nprivate byte[] photoData;"
+        },
+        {
+          "file": "src/main/java/com/photoalbum/service/impl/PhotoServiceImpl.java",
+          "lineStart": 95,
+          "lineEnd": 110,
+          "snippet": "photoData = file.getBytes();\n// Store actual photo data in Oracle database"
+        }
+      ]
+    },
+    {
+      "id": "no-authentication",
+      "ruleset": "security",
+      "rule": "missing-authentication",
+      "category": "optional",
+      "severity": "medium",
+      "effort": 13,
+      "title": "No authentication or authorization configured",
+      "description": "The application has no Spring Security configuration, meaning all endpoints (including photo upload and deletion) are publicly accessible without any authentication. This is a security concern for a production deployment in the cloud.",
+      "recommendation": "Add Spring Security to the application. Consider integrating with Azure Active Directory (Azure AD) or Azure Entra ID for authentication. Add Spring Boot starter security dependency and configure authentication for protected routes (e.g., POST /upload, POST /detail/{id}/delete).",
+      "affectedFiles": [
+        {
+          "file": "src/main/java/com/photoalbum/controller/HomeController.java",
+          "lineStart": 52,
+          "lineEnd": 60,
+          "snippet": "@PostMapping(\"/upload\")\n@ResponseBody\npublic ResponseEntity<Map<String, Object>> uploadPhotos(...)"
+        },
+        {
+          "file": "src/main/java/com/photoalbum/controller/DetailController.java",
+          "lineStart": 60,
+          "lineEnd": 70,
+          "snippet": "@PostMapping(\"/{id}/delete\")\npublic String deletePhoto(...)"
+        }
+      ]
+    },
+    {
+      "id": "ddl-auto-create",
+      "ruleset": "cloud-readiness",
+      "rule": "jpa-ddl-auto-create",
+      "category": "mandatory",
+      "severity": "medium",
+      "effort": 2,
+      "title": "JPA DDL auto mode set to 'create' which drops tables on startup",
+      "description": "The configuration spring.jpa.hibernate.ddl-auto=create causes Hibernate to drop and recreate the database schema on every application startup. This will result in data loss on each restart and is entirely unsuitable for production cloud deployments.",
+      "recommendation": "Change spring.jpa.hibernate.ddl-auto to 'validate' or 'none' for production deployments. Use a proper database migration tool such as Flyway or Liquibase to manage schema changes. Add the migration tool as a dependency and create versioned migration scripts.",
+      "affectedFiles": [
+        {
+          "file": "src/main/resources/application.properties",
+          "lineStart": 18,
+          "lineEnd": 18,
+          "snippet": "spring.jpa.hibernate.ddl-auto=create"
+        }
+      ]
+    },
+    {
+      "id": "no-health-actuator",
+      "ruleset": "cloud-readiness",
+      "rule": "missing-health-endpoints",
+      "category": "optional",
+      "severity": "medium",
+      "effort": 2,
+      "title": "No Spring Boot Actuator health endpoints configured",
+      "description": "The application does not include Spring Boot Actuator, which provides health check, metrics, and readiness/liveness probe endpoints. These are essential for cloud deployments on Azure App Service, Azure Container Apps, or Azure Kubernetes Service where the platform needs to monitor application health.",
+      "recommendation": "Add spring-boot-starter-actuator dependency to pom.xml. Configure health endpoints in application.properties (management.endpoints.web.exposure.include=health,info). Use /actuator/health for liveness and readiness probes in your deployment configuration.",
+      "affectedFiles": [
+        {
+          "file": "pom.xml",
+          "lineStart": 30,
+          "lineEnd": 95,
+          "snippet": "No spring-boot-starter-actuator dependency found"
+        }
+      ]
+    },
+    {
+      "id": "jpa-show-sql-enabled",
+      "ruleset": "cloud-readiness",
+      "rule": "sql-logging-in-production",
+      "category": "optional",
+      "severity": "low",
+      "effort": 1,
+      "title": "SQL logging enabled (spring.jpa.show-sql=true)",
+      "description": "SQL query logging is enabled in application.properties, which generates excessive log output in production. This can degrade performance and expose sensitive query details in logs.",
+      "recommendation": "Disable SQL logging for production profiles: spring.jpa.show-sql=false. Use Spring profiles to enable SQL logging only in development environments.",
+      "affectedFiles": [
+        {
+          "file": "src/main/resources/application.properties",
+          "lineStart": 18,
+          "lineEnd": 20,
+          "snippet": "spring.jpa.show-sql=true\nspring.jpa.properties.hibernate.format_sql=true"
+        }
+      ]
+    },
+    {
+      "id": "docker-no-non-root-user",
+      "ruleset": "container-security",
+      "rule": "dockerfile-root-user",
+      "category": "optional",
+      "severity": "low",
+      "effort": 1,
+      "title": "Docker container runs as root user",
+      "description": "The Dockerfile does not specify a non-root user, meaning the application container runs as root. This is a container security best practice violation and may not be permitted by some Azure container hosting policies.",
+      "recommendation": "Add a non-root user to the Dockerfile. After copying the application jar, add: RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser followed by USER appuser before the ENTRYPOINT directive.",
+      "affectedFiles": [
+        {
+          "file": "Dockerfile",
+          "lineStart": 1,
+          "lineEnd": 20,
+          "snippet": "No USER directive specifying non-root user"
+        }
+      ]
+    }
+  ]
+}
