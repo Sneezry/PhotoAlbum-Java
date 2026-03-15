@@ -1,0 +1,29 @@
+{
+  "input_name": "Testing Framework",
+  "analysis_method": "Hybrid",
+  "status": "success",
+  "result": {
+    "finding": "JUnit 5 (JUnit Jupiter) with Spring Boot Test, Spring Test, and H2 in-memory database for integration testing",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: spring-boot-starter-test (test scope) — includes JUnit 5 Jupiter, Mockito, AssertJ, Spring Test",
+      "pom.xml: com.h2database:h2 (test scope) — H2 in-memory database for Oracle replacement during tests",
+      "src/test/java/com/photoalbum/PhotoAlbumApplicationTests.java: @SpringBootTest + @Test (JUnit 5)",
+      "src/test/resources/application-test.properties: H2 datasource, H2Dialect, create-drop DDL",
+      "Test uses @ActiveProfiles('test') to activate test profile with H2 instead of Oracle"
+    ],
+    "values": [
+      "JUnit 5 (Jupiter)",
+      "Spring Boot Test (@SpringBootTest)",
+      "Spring Test context management",
+      "H2 in-memory database (Oracle replacement for tests)",
+      "Mockito (included via spring-boot-starter-test)"
+    ],
+    "script_output": {
+      "frameworks_detected": ["JUnit 5", "Spring Boot Test"],
+      "test_files_count": 1
+    }
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

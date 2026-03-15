@@ -1,0 +1,23 @@
+{
+  "input_name": "Resource Limits",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No container-level CPU or memory resource limits configured. Only JVM heap limits set via JAVA_OPTS environment variable (-Xmx512m -Xms256m).",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml: no 'deploy.resources' section for either service (oracle-db or photoalbum-java-app)",
+      "Dockerfile: ENV JAVA_OPTS='-Xmx512m -Xms256m' (JVM heap limits only, not container resource limits)",
+      "No Kubernetes manifests with resources.limits or resources.requests",
+      "No ResourceQuota definitions found"
+    ],
+    "values": [
+      "Container CPU limits: none configured",
+      "Container memory limits: none configured",
+      "JVM heap limit (application only): -Xmx512m (max 512MB), -Xms256m (initial 256MB)",
+      "Oracle DB container: no resource limits"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

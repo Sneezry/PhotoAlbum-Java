@@ -1,0 +1,27 @@
+{
+  "input_name": "Service Definition",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "One docker-compose.yml file defining 2 services with a health-check dependency chain. No Kubernetes manifests or Helm charts present.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml at project root — Compose Specification format (V2, no version field)",
+      "Service 1: oracle-db (image: gvenzl/oracle-free:latest, port 1521, named volume oracle_data, bind mount ./oracle-init, healthcheck configured)",
+      "Service 2: photoalbum-java-app (build from Dockerfile, port 8080, depends_on oracle-db with condition: service_healthy, restart: on-failure)",
+      "Shared bridge network: photoalbum-network",
+      "Named volume: oracle_data",
+      "No k8s/ directory, no Helm Chart.yaml found"
+    ],
+    "values": [
+      "Tool: Docker Compose (Compose Specification)",
+      "Services: 2 (oracle-db, photoalbum-java-app)",
+      "Networks: 1 (photoalbum-network, bridge driver)",
+      "Volumes: 1 named (oracle_data) + 1 bind mount (./oracle-init)",
+      "Health checks: 1 (oracle-db service)",
+      "Restart policy: on-failure (photoalbum-java-app)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

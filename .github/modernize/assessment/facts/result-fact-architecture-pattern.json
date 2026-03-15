@@ -1,0 +1,32 @@
+{
+  "input_name": "Architecture Pattern",
+  "analysis_method": "Hybrid",
+  "status": "success",
+  "result": {
+    "finding": "Layered Monolith with MVC pattern",
+    "confidence": "high",
+    "evidence": [
+      "Single @SpringBootApplication class (PhotoAlbumApplication.java) — single deployable unit",
+      "Clear four-layer package separation: controller, service, repository, model",
+      "MVC pattern: Spring MVC controllers + Thymeleaf view templates + JPA model entities",
+      "No service discovery (no Eureka, Consul, or Kubernetes manifests)",
+      "No API gateway (no Zuul, Spring Cloud Gateway, or similar)",
+      "No message brokers (no Kafka, RabbitMQ, or JMS in pom.xml or configuration)",
+      "docker-compose defines two services (app + Oracle DB), not a microservices split"
+    ],
+    "values": [
+      "Layered Monolith",
+      "MVC (Model-View-Controller)",
+      "Three-tier: Presentation / Business Logic / Data Access"
+    ],
+    "architecture_details": {
+      "pattern": "Layered Monolith",
+      "service_count": 1,
+      "has_service_discovery": false,
+      "has_api_gateway": false,
+      "has_message_broker": false
+    }
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

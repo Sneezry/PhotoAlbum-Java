@@ -1,0 +1,21 @@
+{
+  "input_name": "Container Engine",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Docker engine with Docker Compose v2, using multi-stage Dockerfile build",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile present at project root with multi-stage build (maven:3.9.6-eclipse-temurin-8 build stage, eclipse-temurin:8-jre runtime stage)",
+      "docker-compose.yml present at project root defining two services: oracle-db and photoalbum-java-app",
+      "No Podman, Buildah, or containerd indicators found"
+    ],
+    "values": [
+      "Docker",
+      "Docker Compose",
+      "Multi-stage Dockerfile"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

@@ -1,0 +1,14 @@
+{
+  "input_name": "Application Type",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Web Application (Spring MVC + Thymeleaf) with REST endpoints",
+    "confidence": "high",
+    "evidence": ["Spring Boot web/REST annotations found", "Thymeleaf template engine for server-side HTML rendering", "REST endpoint for photo upload returning JSON responses"],
+    "values": ["Web Application", "Spring MVC", "Thymeleaf", "REST API (upload endpoint)"],
+    "script_output": { "application_type": "Web Application" }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-15T06:19:37Z"
+}

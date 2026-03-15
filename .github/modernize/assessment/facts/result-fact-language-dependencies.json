@@ -1,0 +1,25 @@
+{
+  "input_name": "Language Dependencies",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Java Maven project with 8 runtime/compile dependencies and 3 test-scoped dependencies declared in pom.xml. All runtime dependencies are bundled into the Spring Boot fat JAR during the Docker build stage.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile build stage: COPY pom.xml . then RUN mvn dependency:go-offline -B (downloads all deps)",
+      "Dockerfile build stage: COPY src ./src then RUN mvn clean package -DskipTests (builds fat JAR)",
+      "pom.xml declares 11 total dependencies (8 runtime/compile, 3 test-scoped)",
+      "Spring Boot fat JAR bundles all runtime deps — no runtime mvn/pip/npm install in final container",
+      "Final container image: only the fat JAR is copied (no build tools, no dependency manager)"
+    ],
+    "values": [
+      "Build tool: Maven 3.9.6",
+      "Dependency file: pom.xml",
+      "Runtime/compile dependencies (8): spring-boot-starter-web, spring-boot-starter-thymeleaf, spring-boot-starter-data-jpa, ojdbc8, spring-boot-starter-validation, commons-io:2.11.0, spring-boot-starter-json, spring-boot-devtools (optional)",
+      "Test-scoped dependencies (3): spring-boot-starter-test, h2, (JUnit 5 via spring-boot-starter-test)",
+      "Parent BOM: spring-boot-starter-parent:2.7.18 manages transitive dependency versions"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

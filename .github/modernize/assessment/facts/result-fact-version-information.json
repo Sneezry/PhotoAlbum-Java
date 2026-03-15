@@ -1,0 +1,22 @@
+{
+  "input_name": "Version Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application version is 1.0.0 as declared in pom.xml",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: <version>1.0.0</version> (project version, line 17)",
+      "pom.xml: parent spring-boot-starter-parent version 2.7.18",
+      "No git tags found in repository",
+      "No version property in application.properties"
+    ],
+    "values": [
+      "1.0.0 (application version)",
+      "Release version (no SNAPSHOT suffix)",
+      "Spring Boot parent: 2.7.18"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

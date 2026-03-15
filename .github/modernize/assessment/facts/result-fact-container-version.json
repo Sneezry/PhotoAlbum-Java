@@ -1,0 +1,23 @@
+{
+  "input_name": "Container Version",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No explicit Docker engine version specified. docker-compose.yml uses the modern Compose V2 format (no top-level 'version' key), indicating Docker Compose v2.0+ (Docker Engine 20.10+). Base images specify concrete versions: maven:3.9.6-eclipse-temurin-8 and eclipse-temurin:8-jre.",
+    "confidence": "medium",
+    "evidence": [
+      "docker-compose.yml has no top-level 'version' field, consistent with Docker Compose V2 format (Compose spec)",
+      "No Docker engine version pinned in CI/CD workflows (workflows are squad management, not app build pipelines)",
+      "No version requirements mentioned in README.md",
+      "Base image tags in Dockerfile are pinned (maven:3.9.6-eclipse-temurin-8, eclipse-temurin:8-jre)"
+    ],
+    "values": [
+      "Docker Engine: 20.10+ (implied by Compose V2 format)",
+      "Docker Compose: V2 (Compose spec, no version field)",
+      "Build image: maven:3.9.6",
+      "Runtime image: eclipse-temurin:8-jre"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}
