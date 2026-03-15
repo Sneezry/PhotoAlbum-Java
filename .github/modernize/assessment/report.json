@@ -1,0 +1,526 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-15T06:03:23.406Z",
+    "toolVersion": "AppCAT 0.4.0",
+    "targetIds": [
+      "azure-appservice",
+      "azure-aks",
+      "azure-container-apps"
+    ],
+    "targetDisplayNames": [
+      "Azure App Service",
+      "Azure Kubernetes Service",
+      "Azure Container Apps"
+    ]
+  },
+  "projects": [
+    {
+      "properties": {
+        "appName": "photo-album",
+        "jdkVersion": "8",
+        "frameworks": [
+          "Spring Boot 2.7.18",
+          "Spring Data JPA",
+          "Spring MVC",
+          "Hibernate ORM",
+          "Thymeleaf 3"
+        ],
+        "languages": [
+          "Java"
+        ],
+        "tools": [
+          "Maven 3"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "javaee-to-jakarta-01000",
+          "uri": "file:///src/main/java/com/photoalbum/model/Photo.java",
+          "lineNumber": 3,
+          "message": "javax.persistence.* import found - must migrate to jakarta.persistence.* for Spring Boot 3.x / Jakarta EE 9+",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=java-ee"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 3
+            }
+          }
+        },
+        {
+          "ruleId": "javaee-to-jakarta-01000",
+          "uri": "file:///src/main/java/com/photoalbum/model/Photo.java",
+          "lineNumber": 4,
+          "message": "javax.validation.* import found - must migrate to jakarta.validation.* for Spring Boot 3.x / Jakarta EE 9+",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=java-ee"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 3
+            }
+          }
+        },
+        {
+          "ruleId": "oracle-db-01000",
+          "uri": "file:///src/main/java/com/photoalbum/repository/PhotoRepository.java",
+          "lineNumber": 32,
+          "message": "Oracle-specific SQL function ROWNUM used in native query - not portable to standard SQL or other databases",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=oracle-db"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 5
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 5
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 5
+            }
+          }
+        },
+        {
+          "ruleId": "oracle-db-01001",
+          "uri": "file:///src/main/java/com/photoalbum/repository/PhotoRepository.java",
+          "lineNumber": 55,
+          "message": "Oracle-specific SQL function NVL used in native query - use COALESCE for standard SQL compatibility",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=oracle-db"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 1
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 1
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 1
+            }
+          }
+        },
+        {
+          "ruleId": "oracle-db-01002",
+          "uri": "file:///src/main/java/com/photoalbum/repository/PhotoRepository.java",
+          "lineNumber": 75,
+          "message": "Oracle RANK() OVER analytical function used in native query - not portable to standard SQL",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=oracle-db"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 3
+            }
+          }
+        },
+        {
+          "ruleId": "oracle-db-01003",
+          "uri": "file:///src/main/resources/application.properties",
+          "lineNumber": 8,
+          "message": "Oracle JDBC driver (ojdbc8) configured - tied to Oracle database, requires migration to cloud-compatible database driver",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=oracle-db"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 8
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 8
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 8
+            }
+          }
+        },
+        {
+          "ruleId": "oracle-db-01004",
+          "uri": "file:///src/main/resources/application.properties",
+          "lineNumber": 9,
+          "message": "Oracle dialect (OracleDialect) configured in Hibernate - must be replaced when migrating to a different database",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=oracle-db"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 1
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 1
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 1
+            }
+          }
+        },
+        {
+          "ruleId": "blob-storage-01000",
+          "uri": "file:///src/main/java/com/photoalbum/model/Photo.java",
+          "lineNumber": 35,
+          "message": "Binary photo data stored as BLOB in Oracle database (@Lob byte[] photoData) - consider migrating to Azure Blob Storage for scalability and cost efficiency",
+          "labels": [
+            "type=violation",
+            "category=potential",
+            "source=cloud-readiness"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "potential",
+              "effort": 13
+            },
+            "azure-aks": {
+              "severity": "potential",
+              "effort": 13
+            },
+            "azure-container-apps": {
+              "severity": "potential",
+              "effort": 13
+            }
+          }
+        },
+        {
+          "ruleId": "spring-boot-outdated-01000",
+          "uri": "file:///pom.xml",
+          "lineNumber": 10,
+          "message": "Spring Boot 2.7.18 is an older release (EOL November 2023) - upgrade to Spring Boot 3.x for long-term support and Jakarta EE 10 compatibility",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=spring-boot"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 13
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 13
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 13
+            }
+          }
+        },
+        {
+          "ruleId": "java-version-01000",
+          "uri": "file:///pom.xml",
+          "lineNumber": 24,
+          "message": "Java 8 (1.8) target version - Java 8 has reached Oracle end of public updates. Upgrade to Java 17 or 21 (LTS) for Azure cloud deployments",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=java-version"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 8
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 8
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 8
+            }
+          }
+        },
+        {
+          "ruleId": "jpa-ddl-auto-01000",
+          "uri": "file:///src/main/resources/application.properties",
+          "lineNumber": 16,
+          "message": "spring.jpa.hibernate.ddl-auto=create will DROP and recreate schema on every startup - use 'validate' or 'none' in production, manage schema with Flyway/Liquibase",
+          "labels": [
+            "type=violation",
+            "category=potential",
+            "source=configuration"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "potential",
+              "effort": 3
+            },
+            "azure-aks": {
+              "severity": "potential",
+              "effort": 3
+            },
+            "azure-container-apps": {
+              "severity": "potential",
+              "effort": 3
+            }
+          }
+        },
+        {
+          "ruleId": "secrets-in-config-01000",
+          "uri": "file:///src/main/resources/application.properties",
+          "lineNumber": 10,
+          "message": "Database credentials (username/password) hardcoded in application.properties - use Azure Key Vault or environment variables/secrets for secure credential management",
+          "labels": [
+            "type=violation",
+            "category=mandatory",
+            "source=security"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-aks": {
+              "severity": "mandatory",
+              "effort": 3
+            },
+            "azure-container-apps": {
+              "severity": "mandatory",
+              "effort": 3
+            }
+          }
+        },
+        {
+          "ruleId": "logging-01000",
+          "uri": "file:///src/main/resources/application.properties",
+          "lineNumber": 22,
+          "message": "DEBUG logging level for application code in production config - should be set to INFO or WARN in production environments",
+          "labels": [
+            "type=violation",
+            "category=optional",
+            "source=configuration"
+          ],
+          "targets": {
+            "azure-appservice": {
+              "severity": "optional",
+              "effort": 1
+            },
+            "azure-aks": {
+              "severity": "optional",
+              "effort": 1
+            },
+            "azure-container-apps": {
+              "severity": "optional",
+              "effort": 1
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "javaee-to-jakarta-01000": {
+      "title": "Java EE javax.* namespace must migrate to Jakarta EE jakarta.*",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Spring Boot 3.x Migration Guide - Jakarta EE",
+          "url": "https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide"
+        },
+        {
+          "title": "Jakarta EE 9 Namespace Migration",
+          "url": "https://jakarta.ee/specifications/platform/9/"
+        }
+      ]
+    },
+    "oracle-db-01000": {
+      "title": "Oracle-specific ROWNUM used in native SQL queries",
+      "severity": "mandatory",
+      "effort": 5,
+      "links": [
+        {
+          "title": "Migrate from Oracle to Azure Database for PostgreSQL",
+          "url": "https://learn.microsoft.com/en-us/azure/postgresql/migrate/migration-service/concepts-migration-service-oracle"
+        },
+        {
+          "title": "Standard SQL FETCH FIRST / LIMIT syntax",
+          "url": "https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/overview"
+        }
+      ]
+    },
+    "oracle-db-01001": {
+      "title": "Oracle-specific NVL function in native SQL queries",
+      "severity": "mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "ANSI SQL COALESCE function",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/coalesce-transact-sql"
+        }
+      ]
+    },
+    "oracle-db-01002": {
+      "title": "Oracle analytical functions (RANK OVER, SUM OVER) in native SQL",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Migrate from Oracle to Azure Database for PostgreSQL",
+          "url": "https://learn.microsoft.com/en-us/azure/postgresql/migrate/migration-service/concepts-migration-service-oracle"
+        }
+      ]
+    },
+    "oracle-db-01003": {
+      "title": "Oracle JDBC driver (ojdbc8) dependency",
+      "severity": "mandatory",
+      "effort": 8,
+      "links": [
+        {
+          "title": "Azure Database for PostgreSQL - Flexible Server",
+          "url": "https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/overview"
+        },
+        {
+          "title": "Migrate Oracle workloads to Azure",
+          "url": "https://learn.microsoft.com/en-us/azure/oracle/oracle-azure-overview"
+        }
+      ]
+    },
+    "oracle-db-01004": {
+      "title": "Oracle Hibernate dialect configured",
+      "severity": "mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Hibernate Dialect configuration",
+          "url": "https://docs.jboss.org/hibernate/orm/6.0/userguide/html_single/Hibernate_User_Guide.html#settings-dialect"
+        }
+      ]
+    },
+    "blob-storage-01000": {
+      "title": "Binary data stored as database BLOB - migrate to cloud object storage",
+      "severity": "potential",
+      "effort": 13,
+      "links": [
+        {
+          "title": "Azure Blob Storage for Java",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-java"
+        },
+        {
+          "title": "Azure Storage Spring Boot Starter",
+          "url": "https://learn.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-storage"
+        }
+      ]
+    },
+    "spring-boot-outdated-01000": {
+      "title": "Spring Boot 2.x end-of-life - upgrade to Spring Boot 3.x",
+      "severity": "mandatory",
+      "effort": 13,
+      "links": [
+        {
+          "title": "Spring Boot 3.x Migration Guide",
+          "url": "https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide"
+        },
+        {
+          "title": "Spring Boot Support Policy",
+          "url": "https://spring.io/projects/spring-boot#support"
+        }
+      ]
+    },
+    "java-version-01000": {
+      "title": "Java 8 end of public updates - upgrade to Java 17 or 21 LTS",
+      "severity": "mandatory",
+      "effort": 8,
+      "links": [
+        {
+          "title": "Azure supported Java versions",
+          "url": "https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure"
+        },
+        {
+          "title": "OpenJDK distributions on Azure",
+          "url": "https://learn.microsoft.com/en-us/java/openjdk/overview"
+        }
+      ]
+    },
+    "jpa-ddl-auto-01000": {
+      "title": "JPA DDL auto=create drops and recreates schema on startup",
+      "severity": "potential",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Spring Boot Flyway integration",
+          "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.data-initialization.migration-tool.flyway"
+        }
+      ]
+    },
+    "secrets-in-config-01000": {
+      "title": "Database credentials hardcoded in configuration files",
+      "severity": "mandatory",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Azure Key Vault integration for Spring Boot",
+          "url": "https://learn.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault"
+        },
+        {
+          "title": "Spring Cloud Azure Secret Management",
+          "url": "https://learn.microsoft.com/en-us/azure/developer/java/spring-framework/secret-management"
+        }
+      ]
+    },
+    "logging-01000": {
+      "title": "Debug-level logging configured for production",
+      "severity": "optional",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Spring Boot Logging Configuration",
+          "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.logging"
+        }
+      ]
+    }
+  }
+}
