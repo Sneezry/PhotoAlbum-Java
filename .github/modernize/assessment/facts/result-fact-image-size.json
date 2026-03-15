@@ -3,7 +3,7 @@
   "analysis_method": "LLM",
   "status": "success",
   "result": {
-    "finding": "Estimated final image size ~250-350MB: eclipse-temurin:8-jre base (~220MB) plus the Spring Boot fat JAR (~80-120MB). Multi-stage build keeps build tools out of the final image.",
+    "finding": "Estimated final image size ~300-340MB: eclipse-temurin:8-jre base (~220MB) plus the Spring Boot fat JAR (~80-120MB). Multi-stage build keeps build tools out of the final image.",
     "confidence": "medium",
     "evidence": [
       "Final stage base image: eclipse-temurin:8-jre (~220MB typical for JRE-only Temurin image)",
