@@ -1,0 +1,28 @@
+{
+  "input_name": "Servlet Container",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Spring Boot application with embedded Apache Tomcat 9.0.x (Servlet 4.0 / Java EE 8) via spring-boot-starter-web. Packaged as an executable JAR — no external servlet container deployment required.",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: packaging is 'jar' (not 'war') — embedded container deployment",
+      "pom.xml: spring-boot-starter-web dependency includes embedded Tomcat via tomcat-embed-core",
+      "Spring Boot 2.7.18 parent BOM manages Tomcat 9.0.x (Servlet API 4.0 / Java EE 8)",
+      "No web.xml deployment descriptor found (Spring Boot auto-configuration replaces it)",
+      "No container-specific config files (no weblogic.xml, jboss-web.xml, etc.)",
+      "No custom HttpServlet or Filter implementations — Spring MVC DispatcherServlet handles routing",
+      "application.properties: server.port=8080 (embedded Tomcat configuration)"
+    ],
+    "values": [
+      "Servlet API 4.0 (Java EE 8)",
+      "Apache Tomcat 9.0.x (embedded, managed by Spring Boot 2.7.18)",
+      "Deployment model: embedded JAR (self-contained executable)",
+      "No external servlet container required",
+      "No custom servlets or filters (0 servlet/filter classes)",
+      "Spring MVC DispatcherServlet handles all HTTP routing"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

@@ -1,0 +1,22 @@
+{
+  "input_name": "Application Name",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application name is 'Photo Album', consistently identified across pom.xml, README, and Docker configuration",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: <name>Photo Album</name> and <artifactId>photo-album</artifactId>",
+      "README.md: '# Photo Album Application - Java Spring Boot with Oracle DB'",
+      "docker-compose.yml: container_name: photoalbum-java-app",
+      "No spring.application.name set in application.properties"
+    ],
+    "values": [
+      "Photo Album",
+      "photo-album (artifact ID / kebab-case identifier)",
+      "photoalbum-java-app (container name)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

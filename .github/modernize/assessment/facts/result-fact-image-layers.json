@@ -1,0 +1,25 @@
+{
+  "input_name": "Image Layers",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Multi-stage Dockerfile with 2 stages. Final image has approximately 7-10 layers: base layers from eclipse-temurin:8-jre plus 1 COPY layer and 1 ENV layer added by the application.",
+    "confidence": "high",
+    "evidence": [
+      "2 FROM instructions (multi-stage build): maven:3.9.6-eclipse-temurin-8 (build stage), eclipse-temurin:8-jre (final stage)",
+      "Build stage: 2 COPY + 2 RUN instructions (4 layers, not carried to final image)",
+      "Final stage: 1 COPY --from=build instruction (carries only the JAR, not build tools)",
+      "ENV JAVA_OPTS instruction adds 1 layer to final image",
+      "WORKDIR, EXPOSE, ENTRYPOINT do not create layers in BuildKit mode"
+    ],
+    "values": [
+      "Estimated final image layer count: 7-10",
+      "FROM instructions: 2 (multi-stage)",
+      "RUN instructions in final stage: 0",
+      "COPY/ADD instructions in final stage: 1",
+      "Build stage RUN instructions: 2 (not in final image)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

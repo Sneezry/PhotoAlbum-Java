@@ -1,0 +1,24 @@
+{
+  "input_name": "Image Size",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Estimated final image size ~250-350MB: eclipse-temurin:8-jre base (~220MB) plus the Spring Boot fat JAR (~80-120MB). Multi-stage build keeps build tools out of the final image.",
+    "confidence": "medium",
+    "evidence": [
+      "Final stage base image: eclipse-temurin:8-jre (~220MB typical for JRE-only Temurin image)",
+      "No additional apt-get/apk/yum package installations in Dockerfile",
+      "Multi-stage build: Maven and JDK only in build stage, not copied to final image",
+      "Spring Boot fat JAR expected ~80-120MB (includes embedded Tomcat and all dependencies)",
+      "ENTRYPOINT copies only app.jar to final image"
+    ],
+    "values": [
+      "Estimated total size: 300-340MB",
+      "Base image (eclipse-temurin:8-jre): ~220MB",
+      "Spring Boot fat JAR: ~80-120MB",
+      "No additional system packages installed"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

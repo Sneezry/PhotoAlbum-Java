@@ -1,0 +1,24 @@
+{
+  "input_name": "Licensing Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "MIT License — project is licensed under MIT by Microsoft Corporation",
+    "confidence": "high",
+    "evidence": [
+      "LICENSE file at project root: 'MIT License, Copyright (c) Microsoft Corporation'",
+      "LICENSE contains standard MIT grant: 'Permission is hereby granted, free of charge...'",
+      "No <licenses> section in pom.xml (license only in LICENSE file)",
+      "Key dependency licenses: Spring Boot (Apache 2.0), Oracle JDBC ojdbc8 (Oracle Free Use Terms of Use), Commons IO (Apache 2.0)"
+    ],
+    "values": [
+      "Primary license: MIT",
+      "Copyright holder: Microsoft Corporation",
+      "Spring Boot dependencies: Apache License 2.0 (compatible with MIT)",
+      "Oracle JDBC (ojdbc8): Oracle Free Use Terms of Use (proprietary, free for development)",
+      "Commons IO: Apache License 2.0"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}

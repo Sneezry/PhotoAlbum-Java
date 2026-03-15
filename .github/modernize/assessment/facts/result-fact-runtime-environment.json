@@ -1,0 +1,30 @@
+{
+  "input_name": "Runtime Environment",
+  "analysis_method": "Hybrid",
+  "status": "success",
+  "result": {
+    "finding": "Java 8 (JDK 1.8) with Spring Boot 2.7.18 running on Eclipse Temurin JRE 8",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile final stage: FROM eclipse-temurin:8-jre (Eclipse Temurin OpenJDK 8 JRE)",
+      "Dockerfile build stage: FROM maven:3.9.6-eclipse-temurin-8 (Maven 3.9.6 with JDK 8)",
+      "pom.xml: <java.version>1.8</java.version>, <maven.compiler.source>8</maven.compiler.source>",
+      "pom.xml: spring-boot-starter-parent version 2.7.18 (last Spring Boot 2.x release supporting Java 8)",
+      "pom.xml: packaging jar (Spring Boot embedded Tomcat)"
+    ],
+    "values": [
+      "Runtime: Java 8 (JDK 1.8 / OpenJDK 8)",
+      "JRE distribution: Eclipse Temurin (Adoptium)",
+      "Framework: Spring Boot 2.7.18",
+      "Build tool: Maven 3.9.6",
+      "Server: Embedded Apache Tomcat (via spring-boot-starter-web)"
+    ],
+    "script_output": {
+      "runtime": "Java",
+      "version": "8",
+      "variant": "eclipse-temurin"
+    }
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-15T06:16:09Z"
+}
