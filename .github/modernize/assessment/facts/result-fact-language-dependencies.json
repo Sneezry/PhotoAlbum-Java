@@ -1,0 +1,25 @@
+{
+  "input_name": "Language Dependencies",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Java Maven project with 10 declared dependencies in pom.xml (8 compile/runtime, 2 test-scope). Spring Boot BOM manages versions. Dependencies are resolved and packaged into a fat JAR during the Docker build stage via 'mvn clean package'.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile: COPY pom.xml . and COPY src ./src — pom.xml and source copied into build stage",
+      "Dockerfile: RUN mvn dependency:go-offline -B and RUN mvn clean package -DskipTests — Maven resolves and bundles all dependencies",
+      "pom.xml: spring-boot-starter-parent v2.7.18 (BOM manages versions for Spring dependencies)",
+      "8 compile/runtime-scope dependencies declared in pom.xml",
+      "2 test-scope dependencies (spring-boot-starter-test, h2) — not bundled in final JAR"
+    ],
+    "values": [
+      "Dependency file: pom.xml (Maven)",
+      "Total declared dependencies: 10",
+      "Runtime/compile dependencies: spring-boot-starter-web, spring-boot-starter-thymeleaf, spring-boot-starter-data-jpa, ojdbc8 (runtime), spring-boot-starter-validation, commons-io:2.11.0, spring-boot-starter-json, spring-boot-devtools (optional)",
+      "Test dependencies: spring-boot-starter-test, h2",
+      "Install method: mvn clean package (fat JAR)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:40:40Z"
+}

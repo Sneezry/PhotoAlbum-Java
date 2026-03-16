@@ -1,0 +1,24 @@
+{
+  "input_name": "Image Size",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Estimated final image size of approximately 280-350MB based on eclipse-temurin:8-jre base (~220MB) plus Spring Boot fat JAR (~80-120MB). Multi-stage build prevents Maven/build tools from inflating the final image.",
+    "confidence": "medium",
+    "evidence": [
+      "Final stage base image: eclipse-temurin:8-jre (Debian-based JRE, ~220MB)",
+      "No additional apt-get/apk package installations in Dockerfile",
+      "Spring Boot fat JAR bundles all dependencies (spring-boot-starter-web, data-jpa, thymeleaf, ojdbc8) — estimated 80-120MB",
+      "Source code is minimal (324KB), size dominated by bundled dependencies in JAR",
+      "Multi-stage build: Maven build stage (~700MB) discarded; only JAR copied to final stage"
+    ],
+    "values": [
+      "Estimated total size: 300-340MB",
+      "Base image (eclipse-temurin:8-jre): ~220MB",
+      "Spring Boot fat JAR (application + all dependencies): ~80-120MB",
+      "No additional package layer overhead"
+    ]
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:36:20Z"
+}

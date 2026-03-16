@@ -1,0 +1,23 @@
+{
+  "input_name": "Communication Protocols",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "HTTP/REST is the only communication protocol used. The application exposes HTTP endpoints via Spring MVC (@Controller, @GetMapping, @PostMapping) on port 8080. It communicates with Oracle DB via JDBC over TCP (port 1521). No gRPC, message queues, WebSockets, or other protocols detected.",
+    "confidence": "high",
+    "evidence": [
+      "Spring MVC @Controller with @GetMapping/@PostMapping annotations found in 3 controllers (HomeController, DetailController, PhotoFileController)",
+      "HomeController.uploadPhotos() uses @ResponseBody returning JSON — hybrid REST endpoint",
+      "PhotoFileController.servePhoto() returns binary image data over HTTP",
+      "JDBC connection to Oracle DB via spring.datasource.url=jdbc:oracle:thin:@oracle-db:1521/FREEPDB1",
+      "No gRPC .proto files found, no Kafka/RabbitMQ dependencies, no WebSocket annotations"
+    ],
+    "values": [
+      "HTTP/REST (Spring MVC) — inbound on port 8080",
+      "JDBC/TCP — outbound to Oracle DB on port 1521",
+      "Protocols NOT used: gRPC, WebSocket, Kafka, RabbitMQ, AMQP"
+    ]
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:37:30Z"
+}

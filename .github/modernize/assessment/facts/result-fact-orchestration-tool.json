@@ -1,0 +1,23 @@
+{
+  "input_name": "Orchestration Tool",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Docker Compose is the only orchestration tool used, managing a 2-service local deployment (Java application + Oracle DB). No Kubernetes manifests, Docker Swarm configuration, or CI/CD workflows detected.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml present at project root defining 2 services: oracle-db and photoalbum-java-app",
+      "docker-compose.yml uses Compose Specification format (no version: field, requires Compose v2+)",
+      "No Kubernetes YAML manifests found (no k8s/, manifests/, or helm/ directories)",
+      "No Docker Swarm deploy: sections in docker-compose.yml",
+      "No .github/workflows/ CI/CD files found referencing kubectl, helm, or docker stack"
+    ],
+    "values": [
+      "Docker Compose (Compose Specification v2+)",
+      "2 services defined: oracle-db, photoalbum-java-app",
+      "Local development/deployment only — no production orchestration configured"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:38:00Z"
+}

@@ -1,0 +1,25 @@
+{
+  "input_name": "Embedded Language Usage",
+  "analysis_method": "LLM",
+  "status": "not_applicable",
+  "result": {
+    "finding": "No embedded language usage detected. The application is a pure Java implementation with no scripting engines, process execution, native library loading, or embedded interpreters. The only non-Java runtime code is client-side JavaScript (upload.js) served as a static asset to browsers.",
+    "confidence": "high",
+    "evidence": [
+      "No Runtime.getRuntime().exec() or ProcessBuilder usage found in Java sources",
+      "No ScriptEngineManager, GroovyShell, PythonInterpreter, JRuby, or Jython references",
+      "No System.loadLibrary() or JNI/JNA dependencies in pom.xml",
+      "No groovy, jython, jruby, nashorn, or graalvm dependencies in pom.xml",
+      "No .groovy, .py, or .lua files in src/main/resources/",
+      "src/main/resources/static/js/upload.js is client-side JavaScript (served to browser, not executed server-side)"
+    ],
+    "values": [
+      "Embedded scripting engines: none",
+      "Process execution: none",
+      "Native libraries: none",
+      "Client-side JS: upload.js (browser-only, not embedded server execution)"
+    ]
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:40:10Z"
+}

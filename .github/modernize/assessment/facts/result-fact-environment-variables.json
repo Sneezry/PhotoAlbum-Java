@@ -1,0 +1,28 @@
+{
+  "input_name": "Environment Variables",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "8 environment variables configured across Dockerfile and docker-compose.yml: 1 JVM runtime variable, 4 Spring datasource/profile variables for the Java app, and 3 Oracle DB setup variables. No .env files or Kubernetes ConfigMaps found.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile ENV: JAVA_OPTS=-Xmx512m -Xms256m (JVM heap configuration)",
+      "docker-compose.yml photoalbum-java-app environment: SPRING_PROFILES_ACTIVE, SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD",
+      "docker-compose.yml oracle-db environment: ORACLE_PASSWORD, APP_USER, APP_USER_PASSWORD",
+      "No .env or .env.example files found in the repository"
+    ],
+    "values": [
+      "JAVA_OPTS (runtime — JVM heap settings)",
+      "SPRING_PROFILES_ACTIVE=docker (runtime — Spring profile)",
+      "SPRING_DATASOURCE_URL (database — JDBC connection string)",
+      "SPRING_DATASOURCE_USERNAME (database — credential)",
+      "SPRING_DATASOURCE_PASSWORD (database — credential/secret)",
+      "ORACLE_PASSWORD (database — Oracle sys password/secret)",
+      "APP_USER (database — Oracle app user)",
+      "APP_USER_PASSWORD (database — Oracle app user credential/secret)",
+      "Total: 8 variables (3 runtime, 5 database)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:37:20Z"
+}

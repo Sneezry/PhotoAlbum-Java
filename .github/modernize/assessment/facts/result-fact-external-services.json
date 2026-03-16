@@ -1,0 +1,28 @@
+{
+  "task_id": "019",
+  "input_name": "External Services",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Oracle Database Free (23ai) — the sole external service dependency, used for both relational data and BLOB photo storage",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml: oracle-db service using image gvenzl/oracle-free:latest (Oracle Database Free 23ai)",
+      "application.properties: spring.datasource.url=jdbc:oracle:thin:@oracle-db:1521/FREEPDB1",
+      "application-docker.properties: spring.datasource.url=jdbc:oracle:thin:@oracle-db:1521:XE",
+      "pom.xml: com.oracle.database.jdbc:ojdbc8 (runtime scope)",
+      "Note: automated script did not detect Oracle (only scans for PostgreSQL, MySQL, Redis, RabbitMQ, Kafka, Elasticsearch)"
+    ],
+    "values": [
+      "Oracle Database Free 23ai (gvenzl/oracle-free:latest)",
+      "Connection: JDBC on port 1521 (FREEPDB1 / XE)",
+      "Usage: relational data storage + BLOB photo data storage"
+    ],
+    "script_output": {
+      "services": ["Oracle Database"],
+      "count": 1
+    }
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:38:40Z"
+}

@@ -1,0 +1,24 @@
+{
+  "input_name": "Licensing Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "MIT License held by Microsoft Corporation, confirmed via LICENSE file. Key dependencies use Apache 2.0 (Spring Boot, Commons IO) and Oracle JDBC proprietary license (ojdbc8).",
+    "confidence": "high",
+    "evidence": [
+      "LICENSE file at project root: MIT License, Copyright (c) Microsoft Corporation",
+      "pom.xml: no <licenses> element declared, but parent spring-boot-starter-parent is Apache 2.0",
+      "Key dependency licenses: Spring Boot (Apache 2.0), Apache Commons IO (Apache 2.0), Oracle JDBC ojdbc8 (Oracle Technology Network License Agreement — proprietary), H2 (EPL 2.0 / MPL 2.0, test scope)"
+    ],
+    "values": [
+      "Application license: MIT",
+      "Copyright holder: Microsoft Corporation",
+      "Spring Boot / Spring dependencies: Apache License 2.0",
+      "Oracle JDBC (ojdbc8): Oracle Technology Network License Agreement (proprietary — distribution restrictions apply)",
+      "Apache Commons IO: Apache License 2.0",
+      "H2 Database (test only): EPL 2.0 / MPL 2.0"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:39:10Z"
+}
