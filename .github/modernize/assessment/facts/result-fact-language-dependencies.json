@@ -1,0 +1,24 @@
+{
+  "input_name": "Language Dependencies",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "8 runtime Java Maven dependencies managed via pom.xml with Spring Boot 2.7.18 as parent BOM. Dependencies are resolved and bundled into a Spring Boot fat JAR during the Docker multi-stage build.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile: COPY pom.xml . and RUN mvn dependency:go-offline -B (layer caching for dependencies)",
+      "Dockerfile: COPY src ./src and RUN mvn clean package -DskipTests (builds fat JAR)",
+      "pom.xml: 8 runtime/compile scope dependencies + 2 test-only dependencies",
+      "All dependencies bundled into app.jar (Spring Boot fat JAR, BOOT-INF/lib/)"
+    ],
+    "values": [
+      "Dependency file: pom.xml (Maven)",
+      "Runtime dependencies (8): spring-boot-starter-web, spring-boot-starter-thymeleaf, spring-boot-starter-data-jpa, ojdbc8, spring-boot-starter-validation, commons-io:2.11.0, spring-boot-starter-json, spring-boot-devtools (optional)",
+      "Test dependencies (2): spring-boot-starter-test, h2",
+      "Parent BOM: spring-boot-starter-parent 2.7.18",
+      "Packaging: Spring Boot fat JAR (all dependencies bundled)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

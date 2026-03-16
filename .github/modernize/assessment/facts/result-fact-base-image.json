@@ -1,0 +1,22 @@
+{
+  "input_name": "Base Image",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Multi-stage build: build stage uses maven:3.9.6-eclipse-temurin-8, final runtime stage uses eclipse-temurin:8-jre from Docker Hub",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile at project root with two FROM instructions indicating multi-stage build",
+      "Stage 1 (build): FROM maven:3.9.6-eclipse-temurin-8 AS build",
+      "Stage 2 (runtime/final): FROM eclipse-temurin:8-jre"
+    ],
+    "values": [
+      "maven:3.9.6-eclipse-temurin-8 (build stage)",
+      "eclipse-temurin:8-jre (final runtime stage)",
+      "Eclipse Temurin (Adoptium) OpenJDK 8 JRE",
+      "Docker Hub registry"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

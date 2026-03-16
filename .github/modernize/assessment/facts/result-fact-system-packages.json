@@ -1,0 +1,22 @@
+{
+  "input_name": "System Packages",
+  "analysis_method": "LLM",
+  "status": "not_applicable",
+  "result": {
+    "finding": "No additional system packages installed in either build or runtime stage. The Dockerfile relies solely on packages bundled in the base images (maven:3.9.6-eclipse-temurin-8 and eclipse-temurin:8-jre).",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile build stage (FROM maven:3.9.6-eclipse-temurin-8): no RUN apt-get/apk/yum install commands",
+      "Dockerfile runtime stage (FROM eclipse-temurin:8-jre): no RUN apt-get/apk/yum install commands",
+      "Only RUN commands in Dockerfile: 'mvn dependency:go-offline -B' and 'mvn clean package -DskipTests' (Maven, not package manager)",
+      "Base image eclipse-temurin:8-jre includes JRE and minimal Debian packages by default"
+    ],
+    "values": [
+      "System packages explicitly installed: none",
+      "Package manager: not used",
+      "Base image packages: JRE + Debian minimal (included in eclipse-temurin:8-jre, not explicitly added)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

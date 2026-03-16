@@ -1,0 +1,24 @@
+{
+  "input_name": "Resource Limits",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No explicit CPU or memory resource limits configured in docker-compose.yml. JVM heap is implicitly bounded via JAVA_OPTS environment variable (-Xmx512m -Xms256m). Documentation recommends minimum 4GB RAM for the Oracle DB container.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml: no deploy.resources section for either oracle-db or photoalbum-java-app services",
+      "Dockerfile ENV: JAVA_OPTS=-Xmx512m -Xms256m (JVM heap limited to 512MB max, 256MB initial)",
+      "README.md: 'Minimum 4GB RAM available for Oracle DB container' (documentation recommendation only, not enforced)",
+      "No Kubernetes manifests with resources.limits or resources.requests",
+      "No ResourceQuota definitions found"
+    ],
+    "values": [
+      "CPU limits: none configured",
+      "Memory limits: none configured (container level)",
+      "JVM heap: -Xmx512m (max) / -Xms256m (initial) via JAVA_OPTS",
+      "Recommended host RAM: 4GB+ (for Oracle DB, per README)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

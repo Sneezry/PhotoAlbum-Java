@@ -1,0 +1,27 @@
+{
+  "input_name": "Servlet Container",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Spring Boot application with embedded Apache Tomcat 9.x (Servlet 4.0 / Java EE 8) provided via spring-boot-starter-web. Packaged as an executable JAR - no external servlet container required.",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: <packaging>jar</packaging> - executable JAR deployment (not WAR)",
+      "pom.xml: spring-boot-starter-web:2.7.18 includes tomcat-embed-core:9.0.x (Servlet 4.0)",
+      "No web.xml found (annotation-based Spring MVC configuration only)",
+      "No @WebServlet or @WebFilter annotations - uses Spring MVC dispatcher servlet auto-configured by Spring Boot",
+      "Photo entity uses javax.persistence (Java EE 8 namespace, consistent with Servlet 4.0)",
+      "No container-specific configuration files (weblogic.xml, jboss-web.xml, etc.)"
+    ],
+    "values": [
+      "Servlet API: 4.0 (Java EE 8)",
+      "Container: Apache Tomcat 9.x (embedded via spring-boot-starter-web)",
+      "Packaging: JAR (embedded, self-contained)",
+      "Deployment model: Embedded container (java -jar app.jar)",
+      "Spring MVC DispatcherServlet (auto-configured, no web.xml)",
+      "No external servlet container required"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

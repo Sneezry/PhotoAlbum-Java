@@ -1,0 +1,23 @@
+{
+  "input_name": "Version Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application version is 1.0.0 as declared in pom.xml. No git tags found. Spring Boot parent version is 2.7.18.",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: <version>1.0.0</version> for artifact com.photoalbum:photo-album",
+      "pom.xml: parent spring-boot-starter-parent version 2.7.18",
+      "No git tags found in repository",
+      "No version property in application.properties or application-docker.properties"
+    ],
+    "values": [
+      "Application version: 1.0.0",
+      "Version type: release (no SNAPSHOT suffix)",
+      "Spring Boot version: 2.7.18",
+      "Java version: 8 (1.8)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

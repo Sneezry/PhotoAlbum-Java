@@ -1,0 +1,25 @@
+{
+  "input_name": "Network Settings",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Single custom bridge network 'photoalbum-network' defined in docker-compose.yml. Both services (oracle-db and photoalbum-java-app) share this network enabling inter-service communication by service name. Port 8080 exposed to host for application access; port 1521 exposed to host for database access.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml: top-level networks definition: photoalbum-network with driver: bridge",
+      "oracle-db service: connected to photoalbum-network, port 1521:1521 exposed to host",
+      "photoalbum-java-app service: connected to photoalbum-network, port 8080:8080 exposed to host",
+      "Application connects to DB via hostname 'oracle-db' (Docker DNS resolution within photoalbum-network)",
+      "Dockerfile: EXPOSE 8080 documents container port"
+    ],
+    "values": [
+      "Network name: photoalbum-network",
+      "Network driver: bridge",
+      "Services on network: oracle-db, photoalbum-java-app",
+      "Host-exposed ports: 8080 (app), 1521 (Oracle DB)",
+      "Inter-service DNS: oracle-db hostname resolves within photoalbum-network"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

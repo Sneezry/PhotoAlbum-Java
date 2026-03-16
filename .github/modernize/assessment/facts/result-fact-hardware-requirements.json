@@ -1,0 +1,25 @@
+{
+  "task_id": "033",
+  "input_name": "Hardware Requirements",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Minimum 4GB RAM required (primarily for Oracle DB container). Oracle Free/XE limits: 2 CPU threads, 2GB RAM for database, 12GB storage. Application JVM capped at 512MB heap via JAVA_OPTS.",
+    "confidence": "high",
+    "evidence": [
+      "README.md: Minimum 4GB RAM available for Oracle DB container",
+      "README.md: Oracle XE has limitations (max 2 CPU threads, 2GB RAM, 12GB storage)",
+      "Dockerfile ENV: JAVA_OPTS=-Xmx512m -Xms256m (application JVM heap bounded at 512MB max)",
+      "No explicit CPU or disk requirements documented for the application itself"
+    ],
+    "values": [
+      "RAM: 4GB minimum (host), 2GB max for Oracle DB, 512MB max JVM heap for app",
+      "CPU: 2 threads max (Oracle Free/XE limitation)",
+      "Disk: 12GB max (Oracle Free/XE storage limit)",
+      "Additional disk: photo BLOBs stored in Oracle DB (counted within 12GB)"
+    ],
+    "script_output": { "ram": "4GB", "cpu": "2 CPU", "disk": "12GB" }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-16T06:18:29Z"
+}
