@@ -1,0 +1,22 @@
+{
+  "input_name": "Container Version",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No explicit Docker engine version specified. docker-compose.yml uses the modern Compose Specification format (no top-level 'version' field), requiring Docker Compose v2.x. README references Docker Desktop with Compose included and a minimum 4GB RAM requirement.",
+    "confidence": "medium",
+    "evidence": [
+      "docker-compose.yml uses Compose Specification format (no 'version:' key), requiring Docker Compose v2.0+",
+      "README.md states: 'Docker Desktop installed and running' and 'Docker Compose (included with Docker Desktop)'",
+      "No CI/CD workflow files found that specify a Docker engine version",
+      "No explicit Docker engine version pinned in any configuration file"
+    ],
+    "values": [
+      "Engine: Docker",
+      "Docker Compose: v2.x (Compose Specification, no version field)",
+      "No minimum Docker engine version explicitly specified"
+    ]
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:36:40Z"
+}

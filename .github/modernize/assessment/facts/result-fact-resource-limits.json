@@ -1,0 +1,23 @@
+{
+  "input_name": "Resource Limits",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No explicit container CPU or memory resource limits configured in docker-compose.yml. The Java application self-limits JVM heap via JAVA_OPTS (-Xmx512m -Xms256m). README recommends minimum 4GB RAM for the Oracle DB container, but this is not enforced via resource constraints.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml: no deploy.resources section in either service definition",
+      "Dockerfile ENV JAVA_OPTS=-Xmx512m -Xms256m (JVM heap: 256MB min, 512MB max — app-level limit, not container-level)",
+      "README.md: 'Minimum 4GB RAM available for Oracle DB container' (documentation only, not enforced)",
+      "No Kubernetes resource limits or requests (no k8s manifests present)"
+    ],
+    "values": [
+      "Container memory limits: none configured",
+      "Container CPU limits: none configured",
+      "JVM heap (application-level): -Xmx512m / -Xms256m",
+      "Recommended system RAM: 4GB+ (Oracle DB requirement, per README)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:38:20Z"
+}

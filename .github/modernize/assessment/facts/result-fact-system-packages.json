@@ -1,0 +1,22 @@
+{
+  "input_name": "System Packages",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "No additional system packages explicitly installed in the Dockerfile. The container relies entirely on packages included in the eclipse-temurin:8-jre base image (Debian-based, includes JRE 8 and standard Debian utilities).",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile: no apt-get install, apk add, yum install, or dnf install commands found",
+      "Dockerfile final stage has only 1 COPY instruction and ENTRYPOINT — no package installation layer",
+      "All required runtime packages come from eclipse-temurin:8-jre base image (Debian JRE packages)",
+      "Build stage uses maven:3.9.6-eclipse-temurin-8 which includes Maven + JDK — no additional packages installed"
+    ],
+    "values": [
+      "Explicitly installed packages: none",
+      "Package manager used: none (no additional packages)",
+      "Packages available via base image: JRE 8 runtime, standard Debian utilities (from eclipse-temurin:8-jre)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:40:30Z"
+}

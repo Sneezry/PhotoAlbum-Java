@@ -1,0 +1,22 @@
+{
+  "input_name": "Application Port",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application consistently exposes port 8080 for HTTP traffic, confirmed across Dockerfile, docker-compose.yml, and application.properties. Oracle DB exposes port 1521 for JDBC connections.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile: EXPOSE 8080",
+      "docker-compose.yml photoalbum-java-app: ports: '8080:8080' (host:container)",
+      "application.properties: server.port=8080",
+      "docker-compose.yml oracle-db: ports: '1521:1521' (JDBC/Oracle Net port)"
+    ],
+    "values": [
+      "Port 8080 (HTTP, Java application)",
+      "Port 1521 (Oracle DB JDBC — internal service port)",
+      "Protocol: HTTP (no TLS/HTTPS configured)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:37:10Z"
+}

@@ -1,0 +1,27 @@
+{
+  "input_name": "Servlet Container",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Spring Boot application with embedded Tomcat 9.x (Servlet 4.0 / Java EE 8) provided automatically by spring-boot-starter-web. Packaged as executable JAR, requiring no external application server deployment.",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml: spring-boot-starter-web dependency (includes embedded Tomcat 9.x transitively)",
+      "pom.xml: <packaging>jar</packaging> (executable fat JAR — embedded container model)",
+      "No web.xml deployment descriptor found — Spring Boot annotation-based servlet configuration",
+      "No WEB-INF/ directory — not a traditional WAR deployment",
+      "No @WebServlet, @WebFilter annotations — Spring MVC @Controller handles requests via DispatcherServlet",
+      "Spring Boot 2.7.18 ships with Tomcat 9.0.x (Servlet 4.0 API, javax.servlet namespace)",
+      "Dockerfile ENTRYPOINT: java $JAVA_OPTS -jar app.jar (self-contained, no external container)"
+    ],
+    "values": [
+      "Servlet API: 4.0 (Java EE 8, javax.servlet namespace)",
+      "Container: Embedded Apache Tomcat 9.0.x",
+      "Deployment model: Embedded (executable JAR)",
+      "No external application server required",
+      "Servlet/Filter implementations: 0 (Spring MVC DispatcherServlet used instead)"
+    ]
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:40:50Z"
+}

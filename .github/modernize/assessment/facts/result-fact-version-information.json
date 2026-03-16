@@ -1,0 +1,22 @@
+{
+  "input_name": "Version Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application version is 1.0.0 as defined in pom.xml. No git tags found. Parent Spring Boot BOM is version 2.7.18.",
+    "confidence": "high",
+    "evidence": [
+      "pom.xml line 17: <version>1.0.0</version> (com.photoalbum:photo-album artifact version)",
+      "pom.xml line 11: parent spring-boot-starter-parent version 2.7.18",
+      "No git tags found in repository history",
+      "No info.app.version or version configuration in application.properties"
+    ],
+    "values": [
+      "Application version: 1.0.0",
+      "Version type: initial release",
+      "Spring Boot parent BOM: 2.7.18"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:37:50Z"
+}

@@ -1,0 +1,23 @@
+{
+  "input_name": "Volume Mounts",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Two volumes configured for the Oracle Database service in docker-compose.yml: one named volume for database data persistence and one bind mount for initialization scripts. The Java application container has no volumes — photos are stored as BLOBs in Oracle DB, not on the filesystem.",
+    "confidence": "high",
+    "evidence": [
+      "No VOLUME instruction in Dockerfile (application container is stateless regarding filesystem)",
+      "docker-compose.yml oracle-db service: named volume 'oracle_data' mounted at /opt/oracle/oradata for database persistence",
+      "docker-compose.yml oracle-db service: bind mount './oracle-init' -> '/container-entrypoint-initdb.d' for DB initialization scripts",
+      "Top-level 'volumes:' section declares 'oracle_data' as a named Docker volume",
+      "photoalbum-java-app service has no volume mounts — photos stored as BLOBs in Oracle DB"
+    ],
+    "values": [
+      "Named volume: oracle_data -> /opt/oracle/oradata (database data persistence)",
+      "Bind mount: ./oracle-init -> /container-entrypoint-initdb.d (DB init scripts, config)",
+      "No volumes on the Java application container"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T04:36:50Z"
+}

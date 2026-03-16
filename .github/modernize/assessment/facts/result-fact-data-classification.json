@@ -1,0 +1,27 @@
+{
+  "input_name": "Data Classification",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Data classification is 'Public/Internal' — the application stores only photo image files and their technical metadata (filename, MIME type, dimensions, upload timestamp). No PII, PHI, PCI, or financial data is stored or processed.",
+    "confidence": "high",
+    "evidence": [
+      "Photo entity (Photo.java) fields: id (UUID), originalFileName, photoData (BLOB), storedFileName, filePath, fileSize, mimeType, uploadedAt, width, height — no personal data fields",
+      "No user accounts, authentication, or personally identifiable information stored",
+      "No payment, health, or financial data fields in schema",
+      "Automated script found no PII/PHI/PCI markers (not_applicable result)",
+      "Application is a simple photo gallery with no user management"
+    ],
+    "values": [
+      "Classification: Public / Internal",
+      "Data stored: Photo images (BLOB), technical metadata (filename, MIME type, dimensions, upload timestamp)",
+      "No PII, PHI, PCI, or confidential data stored",
+      "No formal data classification policy documented"
+    ],
+    "script_output": {
+      "classifications": ["Public"]
+    }
+  },
+  "execution_time_seconds": 2,
+  "timestamp": "2026-03-16T04:39:20Z"
+}
