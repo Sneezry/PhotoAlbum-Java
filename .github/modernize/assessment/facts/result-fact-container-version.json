@@ -1,0 +1,22 @@
+{
+  "input_name": "Container Version",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Docker and Docker Compose are required but no specific version is pinned. The docker-compose.yml uses the modern Compose v2 format (no top-level 'version' field), indicating Docker Compose v2+ (bundled with Docker Desktop). Documentation references Docker Desktop without specifying a minimum version.",
+    "confidence": "medium",
+    "evidence": [
+      "docker-compose.yml uses modern Compose v2 syntax (no 'version:' top-level key), requiring Docker Compose v2.x+",
+      "README.md states 'Docker Desktop installed and running' and 'Docker Compose (included with Docker Desktop)'",
+      "No explicit Docker engine version pinned in CI/CD or documentation",
+      "Use of 'services:' syntax without 'version:' key is Docker Compose v2 format"
+    ],
+    "values": [
+      "Engine: Docker",
+      "Docker Compose: v2+ (modern format, no version key)",
+      "Docker Desktop: required (version unspecified)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

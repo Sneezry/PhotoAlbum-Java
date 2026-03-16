@@ -1,0 +1,21 @@
+{
+  "input_name": "Container Engine",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Docker engine with Docker Compose v2, using standard Dockerfile and docker-compose.yml",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile present at project root with standard Docker syntax (FROM, RUN, COPY, EXPOSE, ENTRYPOINT)",
+      "docker-compose.yml present at project root defining two services: oracle-db and photoalbum-java-app",
+      "Multi-stage Docker build using maven:3.9.6-eclipse-temurin-8 and eclipse-temurin:8-jre base images"
+    ],
+    "values": [
+      "Docker",
+      "Docker Compose (v2 services syntax)",
+      "Multi-stage build"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

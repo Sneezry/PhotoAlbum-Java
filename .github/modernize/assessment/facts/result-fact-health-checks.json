@@ -1,0 +1,25 @@
+{
+  "task_id": "025",
+  "input_name": "Health Checks",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Health check configured only for Oracle DB service in docker-compose.yml. The application container (photoalbum-java-app) has no health check configured. No Spring Boot Actuator health endpoint found.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml oracle-db service: healthcheck using 'healthcheck.sh' command, interval 30s, timeout 10s, retries 15, start_period 180s",
+      "docker-compose.yml photoalbum-java-app: no healthcheck section configured",
+      "Dockerfile: no HEALTHCHECK instruction",
+      "No Kubernetes manifests present",
+      "spring-boot-starter-actuator not in pom.xml dependencies (no /actuator/health endpoint)"
+    ],
+    "values": [
+      "Oracle DB: exec healthcheck (healthcheck.sh), interval 30s, timeout 10s, retries 15, start_period 180s",
+      "Application container: no health check",
+      "No HTTP health endpoint configured"
+    ],
+    "script_output": { "health_checks": ["docker-compose healthcheck"] }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-16T06:14:05Z"
+}

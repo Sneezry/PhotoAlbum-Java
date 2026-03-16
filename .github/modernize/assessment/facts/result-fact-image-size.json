@@ -1,0 +1,24 @@
+{
+  "input_name": "Image Size",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Estimated final image size of approximately 280-350MB: eclipse-temurin:8-jre base (~220MB Debian-based JRE) plus Spring Boot fat JAR (~60-100MB including all dependencies). Build stage (maven:3.9.6-eclipse-temurin-8) is discarded and does not contribute to final image size.",
+    "confidence": "medium",
+    "evidence": [
+      "Multi-stage Dockerfile: only final stage FROM eclipse-temurin:8-jre contributes to image size",
+      "eclipse-temurin:8-jre is Debian-based, estimated ~220MB",
+      "No additional apt/apk package installations in final stage",
+      "COPY --from=build copies only the Spring Boot fat JAR (app.jar)",
+      "Spring Boot fat JAR with Oracle JDBC, JPA/Hibernate, Thymeleaf typically 60-100MB"
+    ],
+    "values": [
+      "Estimated total: ~280-350MB",
+      "Base image (eclipse-temurin:8-jre): ~220MB",
+      "Application JAR layer: ~60-100MB",
+      "Layer metadata overhead: ~5-10MB"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

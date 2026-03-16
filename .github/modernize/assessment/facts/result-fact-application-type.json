@@ -1,0 +1,19 @@
+{
+  "input_name": "Application Type",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Web Application with REST API endpoints - Spring MVC with Thymeleaf server-side rendering and REST endpoints for photo upload",
+    "confidence": "high",
+    "evidence": [
+      "Spring Boot web/REST annotations found (@Controller, @RestController pattern, @GetMapping, @PostMapping, @ResponseBody)",
+      "Thymeleaf templates present (index.html, detail.html, layout.html) indicating server-side rendered web UI",
+      "REST endpoint for photo upload returning JSON (HomeController.uploadPhotos with @ResponseBody)",
+      "spring-boot-starter-web and spring-boot-starter-thymeleaf in pom.xml"
+    ],
+    "values": ["Web Application", "REST API (upload endpoint)", "Server-side rendered MVC"],
+    "script_output": { "application_type": "REST API" }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-16T06:13:20Z"
+}

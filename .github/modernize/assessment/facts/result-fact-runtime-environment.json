@@ -1,0 +1,32 @@
+{
+  "task_id": "014",
+  "input_name": "Runtime Environment",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Java 8 (JRE) runtime on Debian Linux via Eclipse Temurin (Adoptium). Spring Boot 2.7.18 embedded Tomcat serves as the application server. Maven 3.9.6 used for build.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile build stage: FROM maven:3.9.6-eclipse-temurin-8 (Maven 3.9.6 + JDK 8)",
+      "Dockerfile runtime stage: FROM eclipse-temurin:8-jre (Adoptium OpenJDK 8 JRE, Debian-based)",
+      "pom.xml: <java.version>1.8</java.version>, maven.compiler.source/target=8",
+      "pom.xml: spring-boot-starter-parent 2.7.18 (includes embedded Tomcat 9.x)",
+      "ENTRYPOINT: java $JAVA_OPTS -jar app.jar (Spring Boot executable JAR)"
+    ],
+    "values": [
+      "Runtime: Java (JVM)",
+      "JRE Version: Java 8 (1.8) - Eclipse Temurin",
+      "Application framework: Spring Boot 2.7.18",
+      "Embedded server: Tomcat (via spring-boot-starter-web)",
+      "Build tool: Maven 3.9.6",
+      "Variant: Debian Linux (eclipse-temurin:8-jre)"
+    ],
+    "script_output": {
+      "runtime": "Java",
+      "version": "8",
+      "variant": "eclipse-temurin-jre-debian"
+    }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-16T06:19:35Z"
+}

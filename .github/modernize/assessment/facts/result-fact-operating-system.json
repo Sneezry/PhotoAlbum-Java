@@ -1,0 +1,24 @@
+{
+  "input_name": "Operating System",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Target container OS is Debian Linux (via eclipse-temurin:8-jre base image). Application runs on Linux in containers. Windows PowerShell scripts present for Azure infrastructure setup but not for application runtime.",
+    "confidence": "high",
+    "evidence": [
+      "Dockerfile final stage: FROM eclipse-temurin:8-jre (Eclipse Temurin JRE images are Debian-based)",
+      "Dockerfile build stage: FROM maven:3.9.6-eclipse-temurin-8 (also Debian-based)",
+      "Docker Compose gvenzl/oracle-free:latest supports both ARM64 and x86_64 Linux",
+      "azure-setup.ps1 and azure-reset.ps1: PowerShell scripts for Azure infrastructure (Windows/pwsh compatible, not app runtime OS)",
+      "README.md: Docker Desktop required (cross-platform, but containers run Linux)"
+    ],
+    "values": [
+      "Container OS: Debian Linux (eclipse-temurin:8-jre base)",
+      "Architecture: linux/amd64 and linux/arm64 (Temurin supports both)",
+      "Development host: cross-platform (Docker Desktop for Windows/macOS/Linux)",
+      "Azure setup scripts: PowerShell (Windows/pwsh)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

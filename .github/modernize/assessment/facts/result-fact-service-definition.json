@@ -1,0 +1,26 @@
+{
+  "input_name": "Service Definition",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Single docker-compose.yml defining 2 services (oracle-db and photoalbum-java-app) with dependency ordering, 1 named volume, and 1 custom bridge network. No Kubernetes manifests or Helm charts present.",
+    "confidence": "high",
+    "evidence": [
+      "docker-compose.yml at project root with 2 service definitions",
+      "Service oracle-db: image gvenzl/oracle-free:latest, ports 1521:1521, named volume oracle_data, bind mount for init scripts, healthcheck configured",
+      "Service photoalbum-java-app: built from local Dockerfile, ports 8080:8080, depends_on oracle-db with condition: service_healthy, restart: on-failure",
+      "1 named volume: oracle_data (Oracle database persistence)",
+      "1 custom network: photoalbum-network (bridge driver)",
+      "No k8s/, manifests/, or helm/ directories found"
+    ],
+    "values": [
+      "Tool: Docker Compose (v2 format)",
+      "Service count: 2 (oracle-db, photoalbum-java-app)",
+      "Volume count: 1 named (oracle_data) + 1 bind mount (oracle-init)",
+      "Network count: 1 custom bridge (photoalbum-network)",
+      "Dependency: photoalbum-java-app depends_on oracle-db (service_healthy condition)"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

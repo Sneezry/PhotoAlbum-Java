@@ -1,0 +1,28 @@
+{
+  "input_name": "Data Classification",
+  "analysis_method": "Code",
+  "status": "success",
+  "result": {
+    "finding": "Public/Internal data only. The application stores photo images (binary BLOB) and associated metadata (filename, size, dimensions, upload timestamp). No PII, PHI, PCI, or confidential business data detected.",
+    "confidence": "medium",
+    "evidence": [
+      "Photo entity fields: id (UUID), originalFileName, storedFileName, filePath, fileSize, mimeType, uploadedAt, width, height, photoData (BLOB)",
+      "No user identity fields (no username, email, address, phone)",
+      "No payment or financial data fields",
+      "No health or medical data fields",
+      "No formal data classification policy documented in README or docs",
+      "Database credentials hardcoded in docker-compose.yml represent internal configuration data"
+    ],
+    "values": [
+      "Classification: Public/Internal",
+      "Data types: photo images (BLOB), photo metadata (filename, size, dimensions, timestamp)",
+      "No PII stored",
+      "No PHI stored",
+      "No PCI data stored",
+      "Configuration data (DB passwords) classified as Internal/Confidential"
+    ],
+    "script_output": { "classifications": ["Internal"] }
+  },
+  "execution_time_seconds": 0,
+  "timestamp": "2026-03-16T06:17:49Z"
+}

@@ -1,0 +1,26 @@
+{
+  "input_name": "Communication Protocols",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "HTTP/REST only. The application exposes HTTP endpoints via Spring MVC on port 8080. No gRPC, message queues, WebSockets, or other protocols detected. Database communication uses JDBC over TCP to Oracle on port 1521.",
+    "confidence": "high",
+    "evidence": [
+      "@Controller, @GetMapping, @PostMapping, @ResponseBody annotations in HomeController, DetailController, PhotoFileController",
+      "spring-boot-starter-web dependency enabling Spring MVC HTTP endpoint exposure",
+      "No .proto files found (no gRPC)",
+      "No Kafka, RabbitMQ, ActiveMQ, or JMS dependencies in pom.xml",
+      "No WebSocket dependencies or @ServerEndpoint annotations",
+      "JDBC communication to Oracle DB via oracle.jdbc.OracleDriver on port 1521"
+    ],
+    "values": [
+      "HTTP/REST (Spring MVC, port 8080)",
+      "JDBC/TCP (Oracle DB connection, port 1521, internal only)",
+      "No gRPC",
+      "No message queues",
+      "No WebSockets"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

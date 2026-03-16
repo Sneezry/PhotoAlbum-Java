@@ -1,0 +1,26 @@
+{
+  "input_name": "XML Configs",
+  "analysis_method": "LLM",
+  "status": "not_applicable",
+  "result": {
+    "finding": "No application XML configuration files detected. The application uses Spring Boot's annotation-based @Configuration approach exclusively. Only pom.xml (Maven build descriptor) exists as an XML file.",
+    "confidence": "high",
+    "evidence": [
+      "Only XML file found: pom.xml (Maven build descriptor, not application config)",
+      "No Spring XML context files: no applicationContext.xml, spring-*.xml, or *-context.xml",
+      "No Hibernate mapping files: no hibernate.cfg.xml or *.hbm.xml",
+      "No Java EE deployment descriptors: no web.xml, persistence.xml, or ejb-jar.xml",
+      "No MyBatis mapper XML files",
+      "No Log4j/Logback XML configuration files (uses Spring Boot default logback configuration)",
+      "Spring Boot auto-configuration via spring-boot-starter-* and @SpringBootApplication"
+    ],
+    "values": [
+      "Framework: Spring Boot annotation-based configuration (no XML)",
+      "Build: pom.xml (Maven, not application config)",
+      "Total application XML config files: 0",
+      "Configuration approach: application.properties + @SpringBootApplication auto-configuration"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

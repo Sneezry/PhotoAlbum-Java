@@ -1,0 +1,26 @@
+{
+  "input_name": "Licensing Information",
+  "analysis_method": "LLM",
+  "status": "success",
+  "result": {
+    "finding": "Application is licensed under the MIT License, copyright Microsoft Corporation. Key dependencies use Apache 2.0 (Spring Boot, Commons IO) and Oracle Technology Network License (ojdbc8 - requires acceptance for commercial use).",
+    "confidence": "high",
+    "evidence": [
+      "LICENSE file at project root: MIT License, Copyright (c) Microsoft Corporation",
+      "pom.xml: no explicit <licenses> section, but parent spring-boot-starter-parent is Apache 2.0",
+      "Key dependency licenses: Spring Boot (Apache 2.0), Commons IO (Apache 2.0), Thymeleaf (Apache 2.0)",
+      "Oracle JDBC driver (ojdbc8): Oracle Technology Network License Agreement - requires acceptance for use",
+      "No NOTICE, COPYING, or THIRD-PARTY-NOTICES files found"
+    ],
+    "values": [
+      "Application license: MIT License",
+      "Copyright holder: Microsoft Corporation",
+      "Spring Boot / Spring Framework: Apache License 2.0",
+      "Apache Commons IO: Apache License 2.0",
+      "Oracle JDBC (ojdbc8): Oracle Technology Network License (commercial consideration required)",
+      "Oracle Database Free: Oracle Database Free License"
+    ]
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}

@@ -1,0 +1,32 @@
+{
+  "input_name": "Startup Instrumentation",
+  "analysis_method": "Hybrid",
+  "status": "success",
+  "result": {
+    "finding": "SLF4J with Logback (Spring Boot default) used for structured logging across all controllers and service layer. No APM/telemetry tools or AOP frameworks configured.",
+    "confidence": "high",
+    "evidence": [
+      "4 Java files use LoggerFactory.getLogger(): HomeController, DetailController, PhotoFileController, PhotoServiceImpl",
+      "Spring Boot default logging stack: SLF4J API + Logback Classic (included via spring-boot-starter-web)",
+      "No logback.xml or logback-spring.xml found - uses Spring Boot default Logback auto-configuration",
+      "application.properties: logging.level.com.photoalbum=DEBUG, logging.level.org.springframework.web=DEBUG",
+      "application-docker.properties: logging.level.com.photoalbum=INFO, logging.level.org.springframework.web=WARN",
+      "No AOP dependencies (aspectjweaver, spring-aop) in pom.xml",
+      "No APM/telemetry dependencies: no Application Insights, OpenTelemetry, Elastic APM, New Relic, Datadog",
+      "No @Aspect, @Before, @After, or @Around annotations in source code"
+    ],
+    "values": [
+      "SLF4J (API)",
+      "Logback Classic (via Spring Boot auto-configuration)",
+      "Log levels: DEBUG (dev), INFO (docker) for application package"
+    ],
+    "instrumentation_details": {
+      "logging_framework": "SLF4J + Logback (Spring Boot default)",
+      "telemetry_provider": "none",
+      "aop_framework": "none",
+      "startup_file": "PhotoAlbumApplication.java"
+    }
+  },
+  "execution_time_seconds": 1,
+  "timestamp": "2026-03-16T06:08:21.941Z"
+}
